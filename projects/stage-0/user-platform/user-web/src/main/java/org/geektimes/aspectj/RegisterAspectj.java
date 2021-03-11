@@ -7,6 +7,7 @@ import org.aspectj.lang.annotation.Before;
 import org.geektimes.projects.user.domain.User;
 import org.geektimes.projects.user.service.UserServiceImpl;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityTransaction;
 import javax.validation.ConstraintViolation;
 import javax.validation.Validation;
@@ -40,8 +41,14 @@ public class RegisterAspectj {
             });
         }else {
             UserServiceImpl userServiceImpl = (UserServiceImpl) point.getThis();
-            EntityTransaction transaction = userServiceImpl.getEntityManager().getTransaction();
-            transaction.begin();
+            EntityManager entityManager = userServiceImpl.getEntityManager();
+            User u = entityManager.find(User.class, user.getId());
+            if(u != null){
+                user.setSuccess(false);
+            }else {
+                EntityTransaction transaction = userServiceImpl.getEntityManager().getTransaction();
+                transaction.begin();
+            }
         }
     }
 

@@ -24,10 +24,7 @@ public class UserServiceImpl implements UserService {
             return false;
         }
 
-        User u = entityManager.find(User.class, user.getId());
-        if(u != null){
-            return false;
-        }
+        entityManager.persist(user);
 
         System.out.println(entityManager.find(User.class, user.getId()));
         return true;
