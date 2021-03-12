@@ -18,7 +18,7 @@ public class UserServiceImpl implements UserService {
 
     @Override
     // 默认需要事务
-    @LocalTransactional
+//    @LocalTransactional
     public boolean register(User user) {
         if(!user.isSuccess()){
             return false;
